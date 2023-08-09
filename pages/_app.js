@@ -16,7 +16,7 @@ export default function App() {
     setEdit(false);
     setTodos(((prev)=>[...prev,{id:nanoid(),title:todo,isComplete:false}]));
     setTodo(" ");
-    
+     
   }
 
   const handeldelete=(id)=>{
@@ -61,7 +61,6 @@ export default function App() {
               Todo Application
             </Heading>
             <form  onSubmit={addTodo}>
-              {empty&&<Heading>error</Heading>}
          <HStack> <Input placeholder='Enter todo' value={todo} onChange={(e)=>setTodo(e.target.value)} ref={inputref}/>
         {edit?(<HStack><Button colorScheme='blue'onClick={handelSave}>Save</Button><Button colorScheme='orange'onClick={CancelTodo}>Cancel</Button></HStack>):<Button colorScheme='blue'onClick={addTodo}>Add</Button>}</HStack>  </form>
         <Box h="60vh"p={2} w="300px"overflow="auto" css={{
