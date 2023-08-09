@@ -10,7 +10,6 @@ export default function App() {
   const inputref=useRef();
   const [edited,setEdited]=useState("");
   const [editid,setEditid]=useState("");
-  const [complete,setComplete]=useState(true);
   const addTodo=(e)=>{
     e.preventDefault();
     setEdit(false);
@@ -45,10 +44,9 @@ export default function App() {
   }
 
   const handelcomplete = (ids) => {
-    setComplete(!complete)
     setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === ids ? { ...todo, isComplete:complete } : todo
+      prevTodos.map((todo) => 
+        todo.id === ids ? { ...todo, isComplete:!todo.isComplete } : todo
       )
     );
   };
