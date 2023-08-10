@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import { ChakraProvider, Box, Center, Heading, Input, VStack, Button, HStack } from '@chakra-ui/react';
-
 import TodoCard from './TodoCard';
+
 export default function App() {
   const [todo,setTodo]=useState(" ");
   const [todos,setTodos]=useState([]);
@@ -10,6 +10,9 @@ export default function App() {
   const inputref=useRef();
   const [edited,setEdited]=useState("");
   const [editid,setEditid]=useState("");
+
+  const [isedit,setIsedit]=useState(true);
+
 
   const addTodo=(e)=>{
     e.preventDefault();
@@ -23,12 +26,14 @@ export default function App() {
     setTodos(((prev)=>[...prev,{id:editid,title:edited}]));
     setTodo(" ");
     setEdit(false);
+    setIsedit(true);
   }
 
   const handelSave=()=>{
     setTodos(((prev)=>[...prev,{id:editid,title:todo}]));
     setTodo(" ");
     setEdit(false);
+    setIsedit(true);
   }
 
 
@@ -46,7 +51,9 @@ export default function App() {
         '::-webkit-scrollbar': {
           width:0
         }}}>
-        {todos.map((name)=>(<TodoCard todo={name} setTodos={setTodos}setEdited={setEdited} setEditid={setEditid} setTodo={setTodo}setEdit={setEdit}inputref={inputref} key={name.id}/>))}
+          {console.log(todos)}
+        {todos.map((name)=>(<TodoCard todo={name} isedit={isedit}setIsedit={setIsedit}setTodos={setTodos}setEdited={setEdited} setEditid={setEditid} setTodo={setTodo}setEdit={setEdit}inputref={inputref} key={name.id}/>))}
+
         </Box>
         </VStack>
       </Center>
