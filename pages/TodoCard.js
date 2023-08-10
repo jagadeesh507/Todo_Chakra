@@ -1,7 +1,7 @@
 import React from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { Card, Spacer, IconButton } from "@chakra-ui/react";
-import { CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref}) {
   const { id, title } = todo;
@@ -42,21 +42,15 @@ function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref}
           <Spacer />
           <IconButton
             isRound
-            background="pink"
+            background="teal"
             icon={<EditIcon />}
             onClick={() => editTodo(id, title)}
           />
           <IconButton
             isRound
-            background="red"
+            background="pink"
             icon={<DeleteIcon />}
             onClick={() => handeldelete(id)}
-          />
-          <IconButton
-            isRound
-            background="green"
-            icon={<CheckIcon />}
-            onClick={() => handelcomplete(id)}
           />
         </HStack>
       </Card>
