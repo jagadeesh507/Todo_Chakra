@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import { ChakraProvider, Box, Center, Heading, Input, VStack, Button, HStack } from '@chakra-ui/react';
-import { Card, Text, Spacer, IconButton,  } from '@chakra-ui/react';
-import { CheckIcon,DeleteIcon, EditIcon } from '@chakra-ui/icons';
+
+import TodoCard from './TodoCard';
 export default function App() {
   const [todo,setTodo]=useState(" ");
   const [todos,setTodos]=useState([]);
@@ -15,20 +15,6 @@ export default function App() {
     setEdit(false);
     setTodos(((prev)=>[...prev,{id:nanoid(),title:todo,isComplete:false}]));
     setTodo(" ");
-     
-  }
-
-  const handeldelete=(id)=>{
-    setTodos(todos.filter(todo=>todo.id !== id));
-  }
-
-  const editTodo=(id,itm)=>{
-    setEdit(true);
-    setTodo(itm);
-    setEdited(itm);
-    setEditid(id);
-   inputref.current.focus();
-   handeldelete(id);
   }
 
   const CancelTodo=()=>{
@@ -43,13 +29,6 @@ export default function App() {
     setEdit(false);
   }
 
-  const handelcomplete = (ids) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => 
-        todo.id === ids ? { ...todo, isComplete:!todo.isComplete } : todo
-      )
-    );
-  };
 
   return (
     <ChakraProvider>
@@ -65,34 +44,8 @@ export default function App() {
         '::-webkit-scrollbar': {
           width:0
         }}}>
-        {todos.map(({id,title,isComplete})=>( <Card mt='4'padding="15px"key={id} overflowWrap="break-word" wordBreak="break-word">
-          {console.log(id)}
-      <HStack>
-        <Text color={isComplete?"red":"black"}>
-          {title}
-        </Text >
-        <Spacer/>
-        <IconButton
-      isRound
-      background="pink"
-      icon={<EditIcon/>}
-      onClick={()=>editTodo(id,title)}
-      />
-        <IconButton
-      isRound
-      background="red"
-      icon={<DeleteIcon/>}
-      onClick={()=>handeldelete(id)}
-      />
-      <IconButton
-      isRound
-      background="green"
-      icon={<CheckIcon/>}
-      onClick={()=>handelcomplete(id)}
-      />
-      </HStack>
-     
-    </Card>))}
+          {console.log(todos)}
+        {todos.map((name)=>(<TodoCard todo={name} setTodos={setTodos}setEdited={setEdited} setEditid={setEditid} setTodo={setTodo}setEdit={setEdit}inputref={inputref} key={name.id}/>))}
         </Box>
         </VStack>
       </Center>
