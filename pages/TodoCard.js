@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { Card, Spacer, IconButton } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref}) {
   const { id, title } = todo;
-
   const handelcomplete = (ids) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -35,8 +34,10 @@ function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref}
         key={todo.id}
         overflowWrap="break-word"
         wordBreak="break-word"
+        onClick={()=>handelcomplete(id)}
+        cursor="pointer"        
       >
-        {console.log(todo.id)}
+        { console.log("first") }
         <HStack>
           <Text color={todo.isComplete ? "red" : "black"}>{todo.title}</Text>
           <Spacer />
