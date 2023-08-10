@@ -10,13 +10,16 @@ export default function App() {
   const inputref=useRef();
   const [edited,setEdited]=useState("");
   const [editid,setEditid]=useState("");
+
   const [isedit,setIsedit]=useState(true);
+
 
   const addTodo=(e)=>{
     e.preventDefault();
     setEdit(false);
     setTodos(((prev)=>[...prev,{id:nanoid(),title:todo,isComplete:false}]));
     setTodo(" ");
+    console.log("Hello");
   }
 
   const CancelTodo=()=>{
@@ -50,6 +53,7 @@ export default function App() {
         }}}>
           {console.log(todos)}
         {todos.map((name)=>(<TodoCard todo={name} isedit={isedit}setIsedit={setIsedit}setTodos={setTodos}setEdited={setEdited} setEditid={setEditid} setTodo={setTodo}setEdit={setEdit}inputref={inputref} key={name.id}/>))}
+
         </Box>
         </VStack>
       </Center>

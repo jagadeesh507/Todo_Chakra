@@ -5,10 +5,8 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref,setIsedit,isedit}) {
   const { id, title } = todo;
- 
   const handeldelete = (id) => setTodos((prev) => prev.filter((todo) => todo.id !== id));
  
-
   const editTodo = (id, itm) => {
     if(isedit){
     setEdit(true);
@@ -29,6 +27,7 @@ function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref,
         key={todo.id}
         overflowWrap="break-word"
         wordBreak="break-word"
+
         onClick={()=>setTodos((prevTodos) =>prevTodos.map((todo) =>todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo))}
         cursor="pointer"
       >
