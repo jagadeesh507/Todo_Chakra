@@ -1,24 +1,20 @@
-import React, { useState } from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { Card, Spacer, IconButton } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
-function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref,setIsedit,isedit}) {
+function TodoCard({todo,setTodo, setTodos,setIsedit,isedit}) {
   const { id, title } = todo;
-  const handeldelete = (id) => setTodos((prev) => prev.filter((todo) => todo.id !== id));
- 
-  const editTodo = (id, itm) => {
-    if(isedit){
-    setEdit(true);
-    setTodo(itm);
-    setEdited(itm);
-    setEditid(id);
-    inputref.current.focus();
-    handeldelete(id);
-    setIsedit(false);
+  const handeldelete = (e,id) =>{
+    if(isedit.status){
+      e.stopPropagation();
     }
-  };
-
+  setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  }
+  const editTodo=(e)=>{
+    e.stopPropagation();
+    setTodo(title)
+    setIsedit({status:true,id:id})
+  }
   return (
     <>
       <Card
@@ -27,7 +23,6 @@ function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref,
         key={todo.id}
         overflowWrap="break-word"
         wordBreak="break-word"
-
         onClick={()=>setTodos((prevTodos) =>prevTodos.map((todo) =>todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo))}
         cursor="pointer"
       >
@@ -36,15 +31,16 @@ function TodoCard({ todo, setTodos,setEdited,setEditid,setTodo,setEdit,inputref,
           <Spacer />
           <IconButton
             isRound
-            background= {isedit? "teal" : "lightgray" }
+            background="teal"
             icon={<EditIcon />}
-            onClick={() => editTodo(id, title)}
+            onClick={(e) => editTodo(e)}
           />
           <IconButton
             isRound
             background="pink"
             icon={<DeleteIcon />}
-            onClick={() => handeldelete(id)}
+            isDisabled={isedit.status}
+            onClick={(e) => handeldelete(e,id)}
           />
         </HStack>
       </Card>

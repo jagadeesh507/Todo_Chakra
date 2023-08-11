@@ -2,41 +2,28 @@ import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid'
 import { ChakraProvider, Box, Center, Heading, Input, VStack, Button, HStack } from '@chakra-ui/react';
 import TodoCard from './TodoCard';
+import { color } from 'framer-motion';
 
 export default function App() {
-  const [todo,setTodo]=useState(" ");
+  const [todo,setTodo]=useState("");
   const [todos,setTodos]=useState([]);
-  const [edit, setEdit]=useState(false);
   const inputref=useRef();
-  const [edited,setEdited]=useState("");
-  const [editid,setEditid]=useState("");
+  const [isedit,setIsedit]=useState({status:false,id:null});
 
-  const [isedit,setIsedit]=useState(true);
-
-
-  const addTodo=(e)=>{
+   const addTodo=(e)=>{
     e.preventDefault();
-    setEdit(false);
-    setTodos(((prev)=>[...prev,{id:nanoid(),title:todo,isComplete:false}]));
-    setTodo(" ");
-    console.log("Hello");
-  }
-
-  const CancelTodo=()=>{
-    setTodos(((prev)=>[...prev,{id:editid,title:edited}]));
-    setTodo(" ");
-    setEdit(false);
-    setIsedit(true);
-  }
-
-  const handelSave=()=>{
-    setTodos(((prev)=>[...prev,{id:editid,title:todo}]));
-    setTodo(" ");
-    setEdit(false);
-    setIsedit(true);
-  }
-
-
+    if(isedit.status){
+     setTodos((prev)=>prev.map((item)=>item.id===isedit.id?{...item, title:todo}:item));
+    }
+    else{
+      if(todo===""){
+        return;
+      }
+      setTodos((prev)=>[{id:nanoid(),title:todo,isComplete:false},...prev]);
+    }
+    setTodo("");
+    setIsedit({status:false,id:null})
+   }
   return (
     <ChakraProvider>
       <Center h='100vh'>
@@ -44,15 +31,14 @@ export default function App() {
             <Heading as='h1' size='xl'color='darkblue'>
               Todo Application
             </Heading>
-            <form  onSubmit={addTodo}>
+            <form  onSubmit={(e)=>addTodo(e)}>
          <HStack> <Input placeholder='Enter todo' value={todo} onChange={(e)=>setTodo(e.target.value)} ref={inputref}/>
-        {edit?(<HStack><Button colorScheme='blue'onClick={handelSave}>Save</Button><Button colorScheme='orange'onClick={CancelTodo}>Cancel</Button></HStack>):<Button colorScheme='blue'onClick={addTodo}>Add</Button>}</HStack>  </form>
+        <Button colorScheme='blue' onClick={addTodo}>{isedit.status? "update":"Add"}</Button></HStack>  </form>
         <Box h="60vh"p={2} w="300px"overflow="auto" css={{
         '::-webkit-scrollbar': {
           width:0
         }}}>
-          {console.log(todos)}
-        {todos.map((name)=>(<TodoCard todo={name} isedit={isedit}setIsedit={setIsedit}setTodos={setTodos}setEdited={setEdited} setEditid={setEditid} setTodo={setTodo}setEdit={setEdit}inputref={inputref} key={name.id}/>))}
+        {todos.map((name)=>(<TodoCard todo={name} setTodos={setTodos} isedit={isedit} setIsedit={setIsedit}setTodo={setTodo} key={name.id}/>))}
 
         </Box>
         </VStack>
