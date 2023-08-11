@@ -27,7 +27,7 @@ function TodoCard({todo,setTodo, setTodos,setIsedit,isedit}) {
         cursor="pointer"
       >
         <HStack>
-          <Text color={todo.isComplete ? "red" : "black"}>{todo.title}</Text>
+          <Text textDecoration={todo.isComplete&&"underline"}>{todo.title}</Text>
           <Spacer />
           <IconButton
             isRound

@@ -12,13 +12,13 @@ export default function App() {
 
    const addTodo=(e)=>{
     e.preventDefault();
-    if(isedit.status){
+    if(todo===""){
+      return;
+    }
+    else if(isedit.status){
      setTodos((prev)=>prev.map((item)=>item.id===isedit.id?{...item, title:todo}:item));
     }
     else{
-      if(todo===""){
-        return;
-      }
       setTodos((prev)=>[{id:nanoid(),title:todo,isComplete:false},...prev]);
     }
     setTodo("");
